@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lapbook: Fundamentos del Desarrollo Web</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="lapbook-contenedor">
+
+        <!-- COHETE -->
+        <img id="coheteVolador" src="{{ url_for('static', filename='imagenes/cohete.png') }}" style="position: fixed; bottom: -150px; left: 50%; transform: translateX(-50%); width: 80px; z-index: 9999; pointer-events: none; transition: bottom 1.5s ease-in-out;" alt="Cohete">
+
+        <!-- INTERIOR -->
+        <div class="contenido-interior">
+            <header class="encabezado-interior">
+                <h2>🚀 Lapbook Interactivo: Conociendo el Desarrollo Web 💻</h2>
+            </header>
+
+            <main class="panel-central">
+                
+                <!-- 1. HTML -->
+                <div class="tarjeta-interior html-card" id="cardHtml" onclick="toggleCascada()">
+                    <div class="card-header-img">
+                        <img src="{{ url_for('static', filename='imagenes/html.png') }}" alt="HTML5">
+                        <span class="flecha-desplegar">▼ Abrir HTML</span>
+                    </div>
+                    <div class="cascada-container" id="contentCascada" style="display: none;">
+                        <div class="term-head">
+                            <span class="term-title">📌 HTML5 (Estructura Web)</span>
+                            <img src="{{ url_for('static', filename='imagenes/html.png') }}" class="mini-logo" alt="HTML">
+                            <span class="btn-x" onclick="event.stopPropagation(); toggleCascada();">✖</span>
+                        </div>
+                        
+                        <div class="cascada-item pesto-interactivo" style="padding: 10px; text-align: left; font-size: 11px;">
+                            <p style="color: #ffb703; margin-bottom: 4px;"><b>Concepto:</b> Define la estructura y contenido básico mediante etiquetas.</p>
+                            <p style="color: #00f5d4; margin-bottom: 6px;"><b>Minijuego (DOM Builder):</b> Al pulsar botones, inyectas elementos reales al DOM, simulando cómo el navegador interpreta el marcado en tiempo real.</p>
+                            <hr style="border: 0.5px solid #444; margin: 6px 0;">
+                            <div style="display: flex; gap: 4px; justify-content: center; margin: 6px 0; flex-wrap: wrap;">
+                                <button style="padding: 3px 6px; background: #ff0054; color: white; border: none; border-radius: 3px; font-weight: bold; font-size: 9px;" onclick="event.stopPropagation(); agregarElementoHtml('h1')">+ h1</button>
+                                <button style="padding: 3px 6px; background: #00f5d4; color: black; border: none; border-radius: 3px; font-weight: bold; font-size: 9px;" onclick="event.stopPropagation(); agregarElementoHtml('p')">+ p</button>
+                                <button style="padding: 3px 6px; background: #ffb703; color: black; border: none; border-radius: 3px; font-weight: bold; font-size: 9px;" onclick="event.stopPropagation(); agregarElementoHtml('btn')">+ btn</button>
+                                <button style="padding: 3px 6px; background: #7209b7; color: white; border: none; border-radius: 3px; font-weight: bold; font-size: 9px;" onclick="event.stopPropagation(); agregarElementoHtml('reset')">🧹</button>
+                            </div>
+                            <div id="htmlCanvas" style="min-height: 35px; background: rgba(0,0,0,0.5); border: 1px dashed #00f5d4; border-radius: 4px; padding: 4px;">
+                                <small style="color: #aaa; font-size: 9px;">Área DOM en vivo...</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. SQL -->
+                <div class="tarjeta-interior sql-card" id="cardSql" onclick="toggleSql()">
+                    <div class="card-header-img">
+                        <img src="{{ url_for('static', filename='imagenes/sql.png') }}" alt="SQL Database">
+                        <span class="flecha-desplegar">▼ Abrir Terminal SQL</span>
+                    </div>
+                    <div class="sql-terminal" id="contentSql" style="display: none;">
+                        <div class="term-head">
+                            <span>>_ SQL (Memoria de Datos)</span>
+                            <img src="{{ url_for('static', filename='imagenes/sql.png') }}" class="mini-logo" alt="SQL">
+                            <span class="btn-x" onclick="event.stopPropagation(); toggleSql();">✖</span>
+                        </div>
+                        
+                        <div class="cascada-item pesto-interactivo" style="padding: 10px; text-align: left; font-size: 11px;">
+                            <p style="color: #ffb703; margin-bottom: 4px;"><b>Concepto:</b> Structured Query Language sirve para crear, consultar, modificar y borrar datos relacionales[cite: 24].</p>
+                            <p style="color: #00f5d4; margin-bottom: 6px;"><b>Minijuego (Consola Relacional):</b> Ejecuta comandos SQL simulados para entender cómo los gestores de bases de datos devuelven y alteran registros.</p>
+                            <hr style="border: 0.5px solid #444; margin: 6px 0;">
+                            <div style="display: flex; gap: 4px; justify-content: center; margin: 6px 0; flex-wrap: wrap;">
+                                <button style="padding: 3px 6px; background: #00f5d4; color: black; border: none; border-radius: 3px; font-weight: bold; font-size: 9px;" onclick="event.stopPropagation(); ejecutarSqlTerminal('select')">SELECT</button>
+                                <button style="padding: 3px 6px; background: #ffb703; color: black; border: none; border-radius: 3px; font-weight: bold; font-size: 9px;" onclick="event.stopPropagation(); ejecutarSqlTerminal('insert')">INSERT</button>
+                                <button style="padding: 3px 6px; background: #ff0054; color: white; border: none; border-radius: 3px; font-weight: bold; font-size: 9px;" onclick="event.stopPropagation(); ejecutarSqlTerminal('drop')">DROP</button>
+                            </div>
+                            <div id="sqlTerminalScreen" style="background: #05050a; border: 1px solid #00f5d4; border-radius: 4px; padding: 4px; text-align: left; font-family: monospace; font-size: 9px; color: #00f5d4; min-height: 28px;">
+                                &gt; Terminal SQL lista...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. JINJA -->
+                <div class="tarjeta-interior jinja-card" id="cardJinja" onclick="toggleJinja()">
+                    <div class="card-header-img">
+                        <img src="{{ url_for('static', filename='imagenes/jinja.png') }}" alt="Jinja">
+                        <span class="flecha-desplegar">▼ Activar Plantilla Jinja</span>
+                    </div>
+                    <div class="jinja-puente" id="contentJinja" style="display: none;">
+                        <div class="puente-head">
+                            <span>🌿 JINJA (Plantillas que piensan)</span>
+                            <img src="{{ url_for('static', filename='imagenes/jinja.png') }}" class="mini-logo" alt="Jinja">
+                            <span class="btn-x" onclick="event.stopPropagation(); toggleJinja();">✖</span>
+                        </div>
+                        
+                        <div class="cascada-item pesto-interactivo" style="padding: 10px; text-align: left; font-size: 11px;">
+                            <p style="color: #ffb703; margin-bottom: 4px;"><b>Concepto:</b> Motor de plantillas de Python (Flask) que mezcla HTML con datos del servidor antes de renderizar[cite: 23].</p>
+                            <p style="color: #00f5d4; margin-bottom: 6px;"><b>Minijuego (Motor de Render):</b> Simula el procesamiento del lado del servidor inyectando variables dinámicas al vuelo en la plantilla.</p>
+                            <hr style="border: 0.5px solid #444; margin: 6px 0;">
+                            <div style="margin: 6px 0; display: flex; gap: 4px; justify-content: center;">
+                                <button style="padding: 3px 6px; background: #7209b7; color: white; border: none; border-radius: 3px; font-weight: bold; font-size: 9px;" onclick="event.stopPropagation(); renderJinjaLive('CyberDev', 'Nivel 99 🚀')">Perfil A</button>
+                                <button style="padding: 3px 6px; background: #ff0054; color: white; border: none; border-radius: 3px; font-weight: bold; font-size: 9px;" onclick="event.stopPropagation(); renderJinjaLive('Guest_User', 'Nivel 1 🛡️')">Perfil B</button>
+                            </div>
+                            <div style="background: rgba(0,0,0,0.6); border: 1px solid #7209b7; padding: 4px; border-radius: 4px; font-family: monospace; font-size: 9px;">
+                                <p style="color: #ff0054; margin: 0;">&lt;h3&gt;Hola &#123;&#123; usuario &#125;&#125;&lt;/h3&gt;</p>
+                                <div id="jinjaLiveOutput" style="color: #00f5d4; font-family: sans-serif; margin-top: 2px;">
+                                    <h3>Hola CyberDev!</h3>
+                                    <small style="font-size: 8px;">Rango: Nivel 99 🚀</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. CSS -->
+                <div class="tarjeta-interior css-card" id="cardCss" onclick="toggleCssCard()">
+                    <div class="card-header-img">
+                        <img src="{{ url_for('static', filename='imagenes/css.png') }}" alt="CSS3">
+                        <span class="flecha-desplegar">▼ Laboratorio CSS</span>
+                    </div>
+                    <div class="css-cabina" id="contentCss">
+                        <div class="css-head">
+                            <span>🎨 CSS3 (Estilos)</span>
+                            <img src="{{ url_for('static', filename='imagenes/css.png') }}" class="mini-logo" alt="CSS">
+                            <span class="btn-x" onclick="event.stopPropagation(); toggleCssCard();">✖</span>
+                        </div>
+                        <div class="css-body">
+                            <p><b>Concepto:</b> Cascading Style Sheets. Describe colores, fuentes y animaciones.</p>
+                            <p><b>Elementos:</b> Selectores (<code>.clase</code>, <code>#id</code>), Flexbox, Grid.</p>
+                            <p><b>Ventajas:</b> Diseños adaptables (Responsive) y separación de contenido.</p>
+                            <p><b>Funcionalidad:</b> Compara selectores con el DOM y aplica reglas de cascada.</p>
+                        </div>
+                        <div class="zona-interactiva">
+                            <span class="lbl-accion">🎨 Edita el estilo en tiempo real:</span>
+                            <div class="paleta-colores">
+                                <button class="c-btn cian" title="Cyan" onclick="event.stopPropagation(); cambiarColorCss('#00f5d4');"></button>
+                                <button class="c-btn rosa" title="Rosa" onclick="event.stopPropagation(); cambiarColorCss('#ff0054');"></button>
+                                <button class="c-btn oro" title="Oro" onclick="event.stopPropagation(); cambiarColorCss('#ffb703');"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Centro: Caja del Juego de Preguntas -->
+                <div class="centro-jogo">
+                    <div class="caja-pregunta">
+                        <p class="num-pregunta" id="numPregunta">Pregunta 1/10</p>
+                        <p class="txt-pregunta" id="txtPregunta">Cargando pregunta...</p>
+                        <div class="botones-opciones" id="contenedorOpciones"></div>
+                        <div id="resultadoJuego"></div>
+                    </div>
+                </div>
+
+                <!-- 5. JavaScript -->
+                <div class="tarjeta-interior js-card" id="cardJs" onclick="toggleJs()">
+                    <div class="card-header-img">
+                        <img src="{{ url_for('static', filename='imagenes/js.png') }}" alt="JavaScript">
+                        <span class="flecha-desplegar">▼ Consola JavaScript</span>
+                    </div>
+                    <div class="js-panel" id="contentJs">
+                        <div class="js-head">
+                            <span>⚡ JAVASCRIPT (Interactividad)</span>
+                            <img src="{{ url_for('static', filename='imagenes/js.png') }}" class="mini-logo" alt="JS">
+                            <span class="btn-x" onclick="event.stopPropagation(); toggleJs();">✖</span>
+                        </div>
+                        <div class="js-body">
+                            <p><b>Concepto:</b> Lenguaje de programación ejecutable en el navegador y servidor.</p>
+                            <p><b>Elementos:</b> Variables, Funciones Flecha, Eventos de clic, DOM.</p>
+                            <p><b>Ventajas:</b> Vuelve las páginas dinámicas y responde a las acciones del usuario.</p>
+                        </div>
+                        <div class="zona-interactiva">
+                            <span class="lbl-accion">⚡ Simula eventos y propulsión:</span>
+                            <button class="btn-lanzar" id="btnLaunch" onclick="event.stopPropagation(); lanzarPropulsion();">🚀 Activar Evento</button>
+                            <p id="jsStatus" class="res-mini">Estado: Standby</p>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+
+            <button class="btn-cerrar-portada" onclick="cerrarPuertas()">📖 Cerrar Portada</button>
+        </div>
+
+        <!-- PUERTAS EXTERIORES -->
+        <div class="puerta puerta-izquierda" id="puertaIzquierda" onclick="abrirPuertas()"></div>
+        <div class="puerta puerta-derecha" id="puertaDerecha" onclick="abrirPuertas()">
+            <span class="indicador-clic">¡Haz clic aquí para abrir! 📖</span>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
